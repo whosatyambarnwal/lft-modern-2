@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>London Food Tour — The Modern Foodie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --orange: #E8631A;
+      --orange-light: #FF7A30;
+      --orange-pale: #FFF3EC;
+      --teal: #2D6B6B;
+      --teal-light: #3D8B8B;
+      --yellow: #F0B429;
+      --stone: #F7F4EF;
+      --charcoal: #1C1C1E;
+      --charcoal-soft: #3A3A3C;
+      --muted: #8A8A7A;
+      --white: #FFFFFF;
+      --border: #E5E0D8;
+      --shadow: rgba(232, 99, 26, 0.12);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--white);
+      color: var(--charcoal);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--stone);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--orange);
+      border-radius: 10px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      transition: all 0.3s;
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .logo .dot {
+      color: var(--orange);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--charcoal-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-phone {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      padding: 11px 24px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--orange-light);
+      transform: scale(1.02);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--charcoal);
+      border-radius: 2px;
+      display: block;
+      transition: all 0.3s;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      z-index: 2000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .mobile-menu.open {
+      transform: translateY(0);
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--orange);
+    }
+
+    .close-menu {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 28px;
+      color: var(--charcoal);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .mob-book {
+      background: var(--orange) !important;
+      color: var(--white) !important;
+      padding: 14px 40px;
+      border-radius: 100px;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 600;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--stone);
+      padding: 20px 48px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: end;
+      min-height: calc(100vh - 72px);
+      overflow: hidden;
+    }
+
+    .hero-left {
+      padding-bottom: 80px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange-pale);
+      border: 1px solid rgba(232, 99, 26, 0.2);
+      border-radius: 100px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--orange);
+      margin-bottom: 28px;
+      animation: popIn 0.6s ease both;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(1.3)
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    .hero h1 .accent {
+      color: var(--orange);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 40px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-search {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px var(--shadow);
+      padding: 20px 24px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .search-field {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .search-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .search-val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .search-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--border);
+    }
+
+    .search-btn {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .search-btn:hover {
+      background: var(--orange-light);
+      transform: scale(1.03);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      animation: fadeUp 0.7s 0.4s ease both;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--charcoal-soft);
+      font-weight: 500;
+    }
+
+    .stat-pill strong {
+      color: var(--orange);
+    }
+
+    /* Hero right - bento photo grid */
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 280px 200px;
+      gap: 12px;
+      align-self: center;
+    }
+
+    .bento-img {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bento-img:first-child {
+      grid-row: span 2;
+      border-radius: 24px;
+    }
+
+    .bento-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .bento-img:hover img {
+      transform: scale(1.05);
+    }
+
+    .bento-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--charcoal);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background: var(--charcoal);
+      padding: 28px 48px;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--orange);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ── TOURS SECTION ── */
+    .tours-section {
+      padding: 100px 48px;
+      background: var(--white);
+    }
+
+    .tours-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900;
+      color: var(--charcoal);
+      line-height: 1.1;
+    }
+
+    .view-all {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--orange);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: gap 0.3s;
+    }
+
+    .view-all:hover {
+      gap: 12px;
+    }
+
+    .tours-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .tour-card {
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--border);
+      transition: all 0.4s;
+      position: relative;
+    }
+
+    .tour-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px var(--shadow);
+      border-color: rgba(232, 99, 26, 0.15);
+    }
+
+    .tour-img-wrap {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+    }
+
+    .tour-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .tour-card:hover .tour-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .tour-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--orange);
+      color: var(--white);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--yellow);
+      color: var(--charcoal);
+      border-radius: 100px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .tour-body {
+      padding: 24px;
+    }
+
+    .tour-name {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .tour-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      background: var(--stone);
+      color: var(--muted);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .tour-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .tour-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .price-wrap {}
+
+    .price-old {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .price-new {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--charcoal);
+    }
+
+    .price-new span {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .book-btn {
+      background: var(--charcoal);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 12px 22px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .book-btn:hover {
+      background: var(--orange);
+      transform: scale(1.03);
+    }
+
+    /* ── WHY US ── */
+    .why-section {
+      background: var(--orange);
+      padding: 100px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-section::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      top: -200px;
+      right: -100px;
+    }
+
+    .why-section::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      bottom: -100px;
+      left: 10%;
+    }
+
+    .why-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .why-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .why-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .why-sub {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 320px;
+      line-height: 1.7;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .why-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: all 0.3s;
+    }
+
+    .why-card:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-6px);
+    }
+
+    .why-icon {
+      font-size: 36px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .why-card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .why-card-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.7;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      padding: 100px 48px;
+      background: var(--stone);
+    }
+
+    .test-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .test-header .section-title {
+      color: var(--charcoal);
+    }
+
+    .test-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .test-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .test-card:hover {
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .stars {
+      color: var(--orange);
+      font-size: 16px;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+
+    .test-text {
+      font-size: 15px;
+      color: var(--charcoal-soft);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .reviewer-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--orange-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .reviewer-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .reviewer-loc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── GIFT SECTION ── */
+    .gift-section {
+      background: var(--yellow);
+      padding: 80px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .gift-left .section-eyebrow {
+      color: var(--charcoal);
+      opacity: 0.6;
+    }
+
+    .gift-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 900;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .gift-text {
+      font-size: 16px;
+      color: var(--charcoal-soft);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 400px;
+    }
+
+    .gift-amounts {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .amount-tag {
+      background: rgba(28, 28, 30, 0.1);
+      border-radius: 100px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--charcoal);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .amount-tag:hover,
+    .amount-tag.active {
+      background: var(--charcoal);
+      color: var(--yellow);
+    }
+
+    .gift-right {
+      display: flex;
+      justify-content: center;
+    }
+
+    .gift-card-preview {
+      background: var(--charcoal);
+      border-radius: 24px;
+      padding: 40px;
+      color: var(--white);
+      width: 100%;
+      max-width: 380px;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .gift-card-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 32px;
+    }
+
+    .gift-card-logo span {
+      color: var(--orange);
+    }
+
+    .gift-card-amount {
+      font-family: 'Fraunces', serif;
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--yellow);
+      margin-bottom: 8px;
+    }
+
+    .gift-card-note {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .gift-card-decoration {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      font-size: 80px;
+      opacity: 0.3;
+    }
+
+    /* ── MAP SECTION ── */
+    .map-section {
+      padding: 100px 48px;
+      background: var(--white);
+    }
+
+    .map-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .map-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .route-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .route-map {
+      background: var(--stone);
+      border-radius: 24px;
+      height: 420px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+    }
+
+    .route-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 24px;
+    }
+
+    .route-stops {}
+
+    .stop-item {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .stop-item:last-child {
+      border-bottom: none;
+    }
+
+    .stop-num {
+      width: 36px;
+      height: 36px;
+      background: var(--orange);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .stop-name {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+
+    .stop-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      background: var(--stone);
+      padding: 100px 48px;
+    }
+
+    .faq-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .faq-header .section-title {
+      color: var(--charcoal);
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .faq-item.open {
+      border-color: rgba(232, 99, 26, 0.25);
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 22px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--charcoal);
+      text-align: left;
+      gap: 16px;
+    }
+
+    .faq-chevron {
+      width: 32px;
+      height: 32px;
+      background: var(--stone);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.3s;
+      flex-shrink: 0;
+      color: var(--orange);
+    }
+
+    .faq-item.open .faq-chevron {
+      background: var(--orange);
+      color: var(--white);
+      transform: rotate(180deg);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-a-inner {
+      padding: 0 24px 22px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      padding: 100px 48px;
+      background: var(--charcoal);
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 80px;
+    }
+
+    .contact-info .section-eyebrow {
+      color: var(--orange);
+    }
+
+    .contact-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 40px;
+      line-height: 1.1;
+    }
+
+    .contact-detail {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+
+    .contact-icon-wrap {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .contact-detail-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 4px;
+    }
+
+    .contact-detail-val {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: all 0.3s;
+    }
+
+    .wa-btn:hover {
+      background: #1ebe5a;
+      transform: scale(1.02);
+    }
+
+    .contact-form {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 40px;
+    }
+
+    .form-title {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--charcoal-soft);
+      letter-spacing: 0.5px;
+    }
+
+    .form-input {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      color: var(--charcoal);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      background: var(--stone);
+    }
+
+    .form-input:focus {
+      border-color: var(--orange);
+      background: var(--white);
+    }
+
+    .form-input::placeholder {
+      color: #C0B8B0;
+    }
+
+    textarea.form-input {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 16px 36px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      margin-top: 4px;
+    }
+
+    .submit-btn:hover {
+      background: var(--orange-light);
+      transform: scale(1.01);
+    }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--teal);
+      padding: 70px 48px;
+      text-align: center;
+    }
+
+    .newsletter h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .newsletter p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 32px;
+    }
+
+    .nl-form {
+      display: flex;
+      max-width: 480px;
+      margin: 0 auto;
+      gap: 0;
+      border-radius: 100px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .nl-form input {
+      flex: 1;
+      border: none;
+      padding: 16px 24px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .nl-form button {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      padding: 16px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+
+    .nl-form button:hover {
+      background: var(--orange-light);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 70px 48px 30px;
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 60px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-logo-text {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .footer-logo-text span {
+      color: var(--orange);
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-chip {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .social-chip:hover {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col ul li a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover {
+      color: var(--orange);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 24px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-legal a {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-legal a:hover {
+      color: var(--orange);
+    }
+
+    /* ── MOBILE BOTTOM BAR ── */
+    .mobile-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      z-index: 999;
+      grid-template-columns: repeat(3, 1fr);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-bar a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 8px;
+      text-decoration: none;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .mobile-bar a:last-child {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .mobile-bar a span {
+      font-size: 20px;
+    }
+
+    /* ── FLOATING WA ── */
+    .floating-wa {
+      position: fixed;
+      bottom: 90px;
+      right: 24px;
+      background: #25D366;
+      color: var(--white);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+      z-index: 900;
+      transition: all 0.3s;
+    }
+
+    .floating-wa:hover {
+      transform: scale(1.1);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1)
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── WAVE DIVIDER ── */
+    .wave-divider {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .wave-divider svg {
+      display: block;
+    }
+
+    /* ════════════════════════════
+   RESPONSIVE — MOBILE
+════════════════════════════ */
+    @media (max-width: 1024px) {
+      .tours-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 20px;
+        height: 64px;
+      }
+
+      .nav-links,
+      .nav-phone {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 20px 0;
+        min-height: auto;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .hero-left {
+        padding-bottom: 60px;
+      }
+
+      .hero-search {
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-divider {
+        display: none;
+      }
+
+      .stats-strip {
+        gap: 28px;
+        padding: 24px 20px;
+      }
+
+      .tours-section {
+        padding: 70px 20px;
+      }
+
+      .tours-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tours-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .why-section {
+        padding: 70px 20px;
+      }
+
+      .why-top {
+        flex-direction: column;
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .testimonials-section {
+        padding: 70px 20px;
+      }
+
+      .test-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gift-section {
+        grid-template-columns: 1fr;
+        padding: 70px 20px;
+        gap: 40px;
+      }
+
+      .gift-card-preview {
+        max-width: 100%;
+      }
+
+      .map-section {
+        padding: 70px 20px;
+      }
+
+      .route-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .route-map {
+        height: 280px;
+      }
+
+      .faq-section {
+        padding: 70px 20px;
+      }
+
+      .contact-section {
+        padding: 70px 20px;
+      }
+
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form {
+        padding: 28px 20px;
+      }
+
+      .newsletter {
+        padding: 60px 20px;
+      }
+
+      .nl-form {
+        flex-direction: column;
+        border-radius: 16px;
+        overflow: visible;
+      }
+
+      .nl-form input {
+        border-radius: 100px;
+      }
+
+      .nl-form button {
+        border-radius: 100px;
+      }
+
+      footer {
+        padding: 60px 20px 24px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .mobile-bar {
+        display: grid;
+      }
+
+      footer {
+        padding-bottom: 80px;
+      }
+
+      .floating-wa {
+        bottom: 80px;
+        right: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" onclick="closeMobileMenu()">✕</button>
+    <a href="#" onclick="closeMobileMenu()">Home</a>
+    <a href="#tours" onclick="closeMobileMenu()">Tours</a>
+    <a href="#why" onclick="closeMobileMenu()">About</a>
+    <a href="#faq" onclick="closeMobileMenu()">FAQs</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+    <a href="#tours" class="mob-book" onclick="closeMobileMenu()">Book Now →</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">London<span class="dot">.</span>Food<span class="dot">.</span>Tour</a>
+    <ul class="nav-links">
+      <li><a href="#tours">Tours</a></li>
+      <li><a href="#why">About</a></li>
+      <li><a href="#faq">FAQs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="tel:07706304888" class="nav-phone">📞 07706 304 888</a>
+      <a href="#tours" class="nav-cta">Book a Tour</a>
+    </div>
+    <button class="hamburger" onclick="openMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="dot"></span> London's Top-Rated Food Tours</div>
+      <h1>London's<br>Tastiest<br><span class="accent">Adventure</span><br>Starts Here 🍻</h1>
+      <p class="hero-sub">Guided food & history walking tours through London's most iconic streets. Small groups. Big
+        flavours. Stories you'll tell for years.</p>
+      <div class="hero-search">
+        <div class="search-field">
+          <div class="search-label">Tour</div>
+          <div class="search-val">Traditional Food Tour</div>
+        </div>
+        <div class="search-divider"></div>
+        <div class="search-field">
+          <div class="search-label">Date</div>
+          <div class="search-val">Pick a date</div>
+        </div>
+        <div class="search-divider"></div>
+        <div class="search-field">
+          <div class="search-label">Guests</div>
+          <div class="search-val">2 adults</div>
+        </div>
+        <button class="search-btn">Search →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-pill">⭐ <strong>500+</strong> reviews</div>
+        <div class="stat-pill">👥 Max <strong>12</strong> guests</div>
+        <div class="stat-pill">💯 <strong>Money-back</strong> guarantee</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="bento-img">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt="Borough Market">
+        <div class="bento-badge">🏆 TripAdvisor Rated</div>
+      </div>
+      <div class="bento-img">
+        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=500&q=80" alt="London">
+      </div>
+      <div class="bento-img">
+        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" alt="Food group">
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat-box"><span class="stat-number" data-target="500" data-suffix="+">0+</span>
+      <div class="stat-label">5-Star Reviews</div>
+    </div>
+    <div class="stat-box"><span class="stat-number" data-target="3" data-suffix="">0</span>
+      <div class="stat-label">Unique Tours</div>
+    </div>
+    <div class="stat-box"><span class="stat-number" data-target="12" data-suffix="">0</span>
+      <div class="stat-label">Max Group Size</div>
+    </div>
+    <div class="stat-box"><span class="stat-number" data-target="10" data-suffix="+">0+</span>
+      <div class="stat-label">Tastings Per Tour</div>
+    </div>
+    <div class="stat-box"><span class="stat-number" data-target="10" data-suffix="yr">0yr</span>
+      <div class="stat-label">Running Strong</div>
+    </div>
+  </div>
+
+  <!-- TOURS -->
+  <section class="tours-section" id="tours">
+    <div class="tours-header reveal">
+      <div>
+        <div class="section-eyebrow">Our Experiences</div>
+        <h2 class="section-title">Pick Your<br>London Adventure</h2>
+      </div>
+      <a href="#" class="view-all">View all tours →</a>
+    </div>
+    <div class="tours-grid">
+      <div class="tour-card reveal">
+        <div class="tour-img-wrap">
+          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
+            alt="Traditional English Food Tour">
+          <span class="tour-badge">🍽 FOOD & CULTURE</span>
+          <span class="offer-badge">SPECIAL OFFER</span>
+        </div>
+        <div class="tour-body">
+          <h3 class="tour-name">Traditional English Food Tour</h3>
+          <div class="tour-meta">
+            <span class="meta-pill">⏱ 3.5 HRS</span>
+            <span class="meta-pill">📍 London Bridge</span>
+            <span class="meta-pill">👥 6-12 People</span>
+          </div>
+          <p class="tour-desc">Wander from London Bridge to Borough Market tasting 10+ authentic British dishes, meeting
+            local artisans and hearing stories you won't find in any guidebook.</p>
+          <div class="tour-footer">
+            <div class="price-wrap">
+              <div class="price-old">£195</div>
+              <div class="price-new">£170 <span>/person</span></div>
+            </div>
+            <a href="#" class="book-btn">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card reveal">
+        <div class="tour-img-wrap">
+          <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80"
+            alt="Royal London Food Tour">
+          <span class="tour-badge">👑 ROYAL</span>
+          <span class="offer-badge">SPECIAL OFFER</span>
+        </div>
+        <div class="tour-body">
+          <h3 class="tour-name">Royal London Food Tour</h3>
+          <div class="tour-meta">
+            <span class="meta-pill">⏱ 3.5 HRS</span>
+            <span class="meta-pill">📍 Green Park</span>
+          </div>
+          <p class="tour-desc">Explore the royal quarter — from Green Park to Piccadilly — tasting the finest foods
+            enjoyed by London's most distinguished residents.</p>
+          <div class="tour-footer">
+            <div class="price-wrap">
+              <div class="price-old">£225</div>
+              <div class="price-new">£199 <span>/person</span></div>
+            </div>
+            <a href="#" class="book-btn">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card reveal">
+        <div class="tour-img-wrap">
+          <img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=600&q=80"
+            alt="Drunken History Pub Tour">
+          <span class="tour-badge">🍺 PUB HISTORY</span>
+          <span class="offer-badge">ONLY £20</span>
+        </div>
+        <div class="tour-body">
+          <h3 class="tour-name">Drunken History London Pub Tour</h3>
+          <div class="tour-meta">
+            <span class="meta-pill">⏱ 3.5 HRS</span>
+            <span class="meta-pill">📍 Blackfriars</span>
+          </div>
+          <p class="tour-desc">Pub crawl meets history lesson. Discover centuries-old taverns, taste cask ales, and hear
+            the most outrageous stories from London's drinking past.</p>
+          <div class="tour-footer">
+            <div class="price-wrap">
+              <div class="price-old">£25</div>
+              <div class="price-new">£20 <span>/person</span></div>
+            </div>
+            <a href="#" class="book-btn">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section" id="why">
+    <div class="why-inner">
+      <div class="why-top reveal">
+        <h2 class="why-title">Why Locals<br>& Visitors Love Us</h2>
+        <p class="why-sub">We're not a sightseeing bus. We're a full sensory experience through real London
+          neighbourhoods.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal"><span class="why-icon">🧑‍🍳</span>
+          <h3 class="why-card-title">Intimate Groups</h3>
+          <p class="why-card-text">Max 12 guests — never lost in a crowd. You get genuine time with your guide.</p>
+        </div>
+        <div class="why-card reveal"><span class="why-icon">🧀</span>
+          <h3 class="why-card-title">10+ Tastings</h3>
+          <p class="why-card-text">Real food from real artisans. Not tourist traps. This is what Londoners actually eat.
+          </p>
+        </div>
+        <div class="why-card reveal"><span class="why-icon">🗝</span>
+          <h3 class="why-card-title">Hidden Gems</h3>
+          <p class="why-card-text">Secret pubs, cobbled alleys, 1000-year-old markets — off the tourist map entirely.
+          </p>
+        </div>
+        <div class="why-card reveal"><span class="why-icon">💯</span>
+          <h3 class="why-card-title">Money-Back Promise</h3>
+          <p class="why-card-text">Guaranteed fun or your money back. That's how confident we are in our guides.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="test-header reveal">
+      <div class="section-eyebrow">What Guests Say</div>
+      <h2 class="section-title">500+ Five-Star Experiences</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"Best thing we did in London. The food was incredible and the guide had us laughing the
+          whole time. Borough Market has never felt so alive!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">🇺🇸</div>
+          <div>
+            <div class="reviewer-name">Sarah M.</div>
+            <div class="reviewer-loc">New York, USA</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"The Royal Tour was extraordinary — we discovered places we'd have walked past without a
+          second glance. Worth every penny."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">🇮🇹</div>
+          <div>
+            <div class="reviewer-name">Marco & Giulia R.</div>
+            <div class="reviewer-loc">Rome, Italy</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"I grew up in London and still learned things I never knew! The pub tour is brilliant —
+          funny, historical, and the ales are top notch."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">🇬🇧</div>
+          <div>
+            <div class="reviewer-name">James T.</div>
+            <div class="reviewer-loc">Manchester, UK</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIFT SECTION -->
+  <section class="gift-section">
+    <div class="gift-left">
+      <div class="section-eyebrow">Gift Vouchers</div>
+      <h2 class="gift-title">The Perfect<br>London Gift 🎁</h2>
+      <p class="gift-text">Give someone the gift of an unforgettable London experience. Gift vouchers never expire and
+        work on any tour.</p>
+      <div class="gift-amounts">
+        <span class="amount-tag active">£20</span>
+        <span class="amount-tag">£50</span>
+        <span class="amount-tag">£100</span>
+        <span class="amount-tag">£170</span>
+        <span class="amount-tag">£199</span>
+        <span class="amount-tag">Custom</span>
+      </div>
+      <a href="#" class="nav-cta" style="display:inline-flex;text-decoration:none;">Buy Gift Voucher →</a>
+    </div>
+    <div class="gift-right">
+      <div class="gift-card-preview">
+        <div class="gift-card-logo">London<span>Food</span>Tour</div>
+        <div
+          style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">
+          Gift Voucher</div>
+        <div class="gift-card-amount">£170</div>
+        <div class="gift-card-note">Valid on any tour · No expiry date</div>
+        <div class="gift-card-decoration">🎁</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOUR ROUTE MAP -->
+  <section class="map-section">
+    <div class="map-inner">
+      <div class="map-header reveal">
+        <div class="section-eyebrow">Tour Route</div>
+        <h2 class="section-title">Follow the Food Trail</h2>
+      </div>
+      <div class="route-grid">
+        <div class="route-map reveal">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.4!2d-0.0876!3d51.5055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487603592b1a5e55%3A0xad8f954eba8cdf8!2sBorough+Market!5e0!3m2!1sen!2suk!4v1600000000000"
+            allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+        <div class="route-stops reveal">
+          <div class="stop-item">
+            <div class="stop-num">1</div>
+            <div>
+              <div class="stop-name">London Bridge</div>
+              <div class="stop-desc">Meet your guide at No. 1 London Bridge — the adventure begins here.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-num">2</div>
+            <div>
+              <div class="stop-name">Borough Market</div>
+              <div class="stop-desc">London's most famous food market — 1,000 years old and still buzzing.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-num">3</div>
+            <div>
+              <div class="stop-name">Shakespeare's Globe</div>
+              <div class="stop-desc">Sample traditional fare in the shadow of the world's most famous theatre.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-num">4</div>
+            <div>
+              <div class="stop-name">Hidden Pub Stop</div>
+              <div class="stop-desc">A Shakespearean pub that's been serving since the 1500s. Cheers!</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-num">5</div>
+            <div>
+              <div class="stop-name">Cream Tea Finale</div>
+              <div class="stop-desc">End with a proper cream tea — scones, clotted cream, and great company.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="faq-inner">
+      <div class="faq-header reveal">
+        <div class="section-eyebrow">Got Questions?</div>
+        <h2 class="section-title">We've Got Answers</h2>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">How long do the tours last? <span
+            class="faq-chevron">▾</span></button>
+        <div class="faq-a">
+          <div class="faq-a-inner">All our tours last approximately 3.5 hours, covering around 2.3km of easy, flat
+            walking at a leisurely pace. Perfect for all fitness levels and ages.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you cater for dietary requirements? <span
+            class="faq-chevron">▾</span></button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Yes! Please inform us in advance. We easily cater for vegetarians and other dietary
+            needs. Please mention any allergies when booking — your safety matters.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">How big are the tour groups? <span
+            class="faq-chevron">▾</span></button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Maximum 12 guests per tour — ensuring an intimate, personal experience. We're not a
+            sightseeing bus. We're your London food friends.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I book a private tour? <span
+            class="faq-chevron">▾</span></button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Absolutely! Perfect for corporate events, birthday parties, hen dos, and family
+            celebrations. We cater for groups of 4–12. Contact us to build your perfect experience.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">What happens if it rains? <span
+            class="faq-chevron">▾</span></button>
+        <div class="faq-a">
+          <div class="faq-a-inner">All tours run rain or shine! We provide ponchos if needed, and all tasting stops have
+            indoor areas. London weather is part of the authentic experience!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <div class="section-eyebrow reveal">Get In Touch</div>
+        <h2 class="contact-title reveal">Let's Plan Your<br>London Experience</h2>
+        <div class="contact-detail reveal">
+          <div class="contact-icon-wrap">📞</div>
+          <div>
+            <div class="contact-detail-label">Phone</div>
+            <div class="contact-detail-val">07706 304 888</div>
+          </div>
+        </div>
+        <div class="contact-detail reveal">
+          <div class="contact-icon-wrap">✉️</div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-val">hello@londonfoodtour.com</div>
+          </div>
+        </div>
+        <div class="contact-detail reveal">
+          <div class="contact-icon-wrap">📍</div>
+          <div>
+            <div class="contact-detail-label">Address</div>
+            <div class="contact-detail-val">Flat 84, Archer House, Vicarage Crescent, London SW11 3LG</div>
+          </div>
+        </div>
+        <div class="contact-detail reveal">
+          <div class="contact-icon-wrap">🕐</div>
+          <div>
+            <div class="contact-detail-label">Hours</div>
+            <div class="contact-detail-val">Monday–Saturday, 10am–6pm</div>
+          </div>
+        </div>
+        <a href="https://wa.me/447706304888" class="wa-btn reveal">💬 WhatsApp Us — Fastest Reply</a>
+      </div>
+      <div class="contact-form reveal">
+        <div class="form-title">Send us a message</div>
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">First Name</label><input type="text" class="form-input"
+              placeholder="John"></div>
+          <div class="form-field"><label class="form-label">Last Name</label><input type="text" class="form-input"
+              placeholder="Smith"></div>
+        </div>
+        <div class="form-field"><label class="form-label">Email</label><input type="email" class="form-input"
+            placeholder="john@example.com"></div>
+        <div class="form-field">
+          <label class="form-label">Tour of Interest</label>
+          <select class="form-input">
+            <option>Traditional English Food Tour</option>
+            <option>Royal London Food Tour</option>
+            <option>Drunken History Pub Tour</option>
+            <option>Private / Group Booking</option>
+            <option>Gift Voucher Enquiry</option>
+          </select>
+        </div>
+        <div class="form-field"><label class="form-label">Message</label><textarea class="form-input"
+            placeholder="Tell us about your group, preferred dates, or any questions…"></textarea></div>
+        <button class="submit-btn">Send Message →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter">
+    <h3 class="reveal">Join 5,000+ London Food Lovers 🍕</h3>
+    <p class="reveal">Get secret spots, special offers & tour updates — straight to your inbox. No spam, ever.</p>
+    <div class="nl-form reveal">
+      <input type="email" placeholder="your@email.com">
+      <button>Subscribe →</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-text">London<span>.</span>Food<span>.</span>Tour</div>
+        <p class="footer-tagline">Real English food and drink tours through London's most iconic and hidden streets.
+          Created by locals, for curious travellers.</p>
+        <div class="social-row">
+          <a href="#" class="social-chip">f</a>
+          <a href="#" class="social-chip">𝕏</a>
+          <a href="#" class="social-chip">📸</a>
+          <a href="#" class="social-chip">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Tours</h4>
+        <ul>
+          <li><a href="#">Traditional Food Tour</a></li>
+          <li><a href="#">Royal London Tour</a></li>
+          <li><a href="#">Pub History Tour</a></li>
+          <li><a href="#">Private Tours</a></li>
+          <li><a href="#">Gift Vouchers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Things To Do</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:07706304888">📞 07706 304 888</a></li>
+          <li><a href="#">✉ hello@londonfoodtour.com</a></li>
+          <li><a href="#">💬 WhatsApp</a></li>
+          <li><a href="#">📍 London, SW11 3LG</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 London Food Tour. All Rights Reserved.</div>
+      <div class="footer-legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+    </div>
+  </footer>
+
+  <!-- MOBILE BOTTOM BAR -->
+  <div class="mobile-bar">
+    <a href="tel:07706304888"><span>📞</span>Call</a>
+    <a href="#"><span>💬</span>WhatsApp</a>
+    <a href="#tours"><span>🎟</span>Book Now</a>
+  </div>
+
+  <!-- FLOATING WA -->
+  <a href="https://wa.me/447706304888" class="floating-wa" aria-label="WhatsApp">💬</a>
+
+  <script>
+    function openMobileMenu() {
+      document.getElementById('mobileMenu').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const answer = item.querySelector('.faq-a');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-a').style.maxHeight = '0';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    }
+
+    // Gift amount selector
+    document.querySelectorAll('.amount-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        document.querySelectorAll('.amount-tag').forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+        const amount = tag.textContent;
+        if (amount !== 'Custom') {
+          document.querySelector('.gift-card-amount').textContent = amount;
+        }
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (i * 0.07) + 's';
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Number Counter Animation
+    const statsObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-target'), 10);
+          const suffix = el.getAttribute('data-suffix') || '';
+          const duration = 2000;
+          const startTime = performance.now();
+
+          const updateCounter = (currentTime) => {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            const easeProgress = progress * (2 - progress); // Ease out quad
+            const current = Math.floor(easeProgress * target);
+            el.innerText = current + suffix;
+
+            if (progress < 1) {
+              requestAnimationFrame(updateCounter);
+            } else {
+              el.innerText = target + suffix;
+            }
+          };
+          requestAnimationFrame(updateCounter);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el));
+  </script>
+</body>
+
+</html>
